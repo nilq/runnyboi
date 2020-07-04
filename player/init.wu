@@ -1,0 +1,54 @@
+import lover { keyboard, graphics }
+
+getFPS: extern fun -> float = "love.timer.getFPS"
+
+Player: struct {
+    x: float
+    y: float
+    dx: float?
+    dy: float?
+    speed: float
+}
+
+Movable: trait {
+    move: fun(self, float, float)
+}
+
+implement Player: Movable {
+    move: fun(self, dx: float, dy: float) {
+        self x += dx
+        self y += dy
+    }
+}
+
+implement Player {
+    update: fun(self, dt: float) {
+        if keyboard isDown("left") {
+            self dx! -= 1.0
+        }
+
+        if keyboard isDown("right") {
+            self dx! += 1.0
+        }
+
+        if keyboard isDown("up") {
+            self dy! -= 1.0
+        }
+
+        if keyboard isDown("down") {
+            self dy! += 1.0
+        }
+
+        self move(self dx! * dt, self dy! * dt)
+    }
+
+    draw: fun(self) {
+        graphics setColor(1, 1, 0)
+        graphics rectangle("fill", self x, self y, 20, 20)
+
+        fps := getFPS() as str
+
+        graphics setColor(0, 1, 0)
+        graphics print("FPS: " ++ fps, 10.0, 10.0)
+    }
+}

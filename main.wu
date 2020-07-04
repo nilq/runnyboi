@@ -1,0 +1,26 @@
+import lover
+import player { Player }
+
+player: Player
+
+load: fun {
+    player = new Player {
+        x: 100
+        y: 100
+        dx: 0
+        dy: 0
+        speed: 100
+    }
+}
+
+update: fun(dt: float) {
+    player update(dt)
+}
+
+draw: fun {
+    player draw()
+}
+
+lover setLoad(load)
+lover setDraw(draw)
+lover setUpdate(update)
